@@ -173,6 +173,8 @@
 
 \def\handwrittensource{./topological-models.pdf}
 
+% TODO: remove background and rules
+
 \begin{document}
 %%%%%
 \begin{handwritten}
@@ -279,22 +281,41 @@
 \end{handwritten}
 \begin{handwritten}
   % Constructions
-  % TODO: split funext to new slide, make everything bigger
+  \note{
+  }
+\end{handwritten}
+\begin{handwritten}
+  % funext
   \note{
   }
 \end{handwritten}
 \begin{handwritten}
   % mono inj
-  % TODO: make a bit bigger
+  % TODO: also recreate external proof
   \note{
   }
 \end{handwritten}
 \begin{handwritten}
   % epi surj
-  % TODO: rewrite, transition does not look good
   \note{
   }
 \end{handwritten}
+\begin{frame}
+
+  \begin{align*}
+    ⟦c = g(b)⟧
+    &= ⟦c = g(b)⟧∧⟦b = b⟧\\
+    &= ⋁_{a ∈ A}⟦c = g(b)⟧∧⟦b=f(a)⟧\\
+    &≤ ⋁_{a ∈ A, b' ∈ B}⟦c = g(b')⟧∧⟦b'=f(a)⟧∧⟦b=f(a)⟧\\
+    &= ⋁_{a ∈ A}⟦c = g∘f(a)⟧∧⟦b=f(a)⟧\\
+    &= ⋁_{a ∈ A}⟦c = h∘f(a)⟧∧⟦b=f(a)⟧\\
+    &≤ ⋁_{a ∈ A, b' ∈ B}⟦c = h(b')⟧∧⟦b'=f(a)⟧∧⟦b=f(a)⟧\\
+    &≤ ⋁_{b' ∈ B}⟦c = h(b')⟧∧⟦b'=b⟧\\
+    &= ⟦c = h∘1_B(b')⟧\\
+    &= ⟦c = h(b')⟧
+  \end{align*}
+
+\end{frame}
 \begin{handwritten}
   % iso bij
   \note{
