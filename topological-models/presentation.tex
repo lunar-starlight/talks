@@ -1,5 +1,5 @@
-%\documentclass[handout]{beamer}
-\documentclass{beamer}
+\documentclass[handout]{beamer}
+%\documentclass{beamer}
 
 % \usetheme{boxes} % see http://www.deic.uab.es/~iblanes/beamer_gallery/ for lots of examples
 \usetheme{metropolis}
@@ -179,11 +179,11 @@
 %%%%%
 \begin{handwritten}
   % Title
-  \note<1>{
+  \note<1|handout:1>{
     Today I will be giving an introduction to topological models in the sense of
     categories of Heyting valued sets.
-    Some weeks ago prof. Simpson presented a tutorial on sheaf semantics, in
-    much greater generality than what I will present today, and there you can
+    Some weeks/months ago prof. Simpson presented a tutorial on sheaf semantics,
+    in much greater generality than what I will present today, and there you can
     just say \quot{topological models are categories of sheaves over a
       topological space} and be done.
     However in this case the objects involved are quite complicated.
@@ -193,7 +193,7 @@
     Heyting valued sets, you can just say the natural numbers object is the set
     \(ℕ\).
   }
-  \note<2>{
+  \note<2|handout:2>{
     So my primary sources for this is Michael Fourman and Dana Scott's paper from
     the 70s, Sheaves and Logic, which introduced the concept and the 3rd volume
     of Francis Borceux's Handbook of Categorical Algebra, which has quite a few
@@ -206,6 +206,7 @@
 
     But to start small, we wish to construct a topos, whose internal logic has
     as its truth values the open sets of our topological space.
+
   }
 \end{handwritten}
 %%%%%
@@ -222,66 +223,202 @@
   % Slovar
   \note<1>{
     So first, we can interpret truth and falsity. Truth should obviously be the
-    whole space. 
+    whole space.
+    % TODO: the rest of the owl
   }
 \end{handwritten}
-\begin{handwritten}
+\begin{handwritten}[6cm]
   % LEM iff discrete
   % NOTE: nekje pred tem rabim povedat, da delamo z okoliši/T₀
   \note{
+    Now, to demonstrate how expressive this logic is, we can actually prove the
+    following.
+    
   }
 \end{handwritten}
 %%%%%
 \begin{handwritten}
   % Step 2
   \note{
-    The idea is to define a set of generators for \(ℱ\).
+    As I mentioned earlier the idea goes back to Peter Fourman and Dana Scott's
+    work in the 70s, but they didn't explicitly write what the motivation for
+    this construction is, at least not one that immediately stands out to me.
+    To be precise, they say this is \quot{the obvious extension of Heyting
+      algebras to predicate logic}.
+
+    This is also why I also rely heavily on Borceux's textbook, which
+    \emph{does} explicitly provide a motivation. In algebra, it is often useful
+    to give an algebraic structure via its presentation, aka a set of generators
+    and some relations they need to satisfy. We wish to apply the same idea to
+    sheaves, and it turns out it works quite well.
+    We know sheaves are closed under restrictions and gluing, and those are the
+    only forms of generation that sheaves support. Furthermore restrictions
+    distribute over gluing, so this gives a somewhat natural characterisation of
+    generation.
+
   }
 \end{handwritten}
-\begin{handwritten}
+\begin{handwritten}[12cm]
   % Generators
-  \note{
+  % TODO: change F' to S
+  \note<1>{
+    So in particular, how to define that a set generates a sheaf, we first say
+    it's a subset of it's set of elements, and it generates \(ℱ\) when \(ℱ\) is
+    the least subsheaf of \(ℱ\) that contains \(S\).
+  }
+  \note<2>{
+    Equivalently, this is a set of generators as discussed above. Key to note
+    here is, that restriction is a bona fide operation, so we don't need any
+    equivalence relation. So if we wish to consider generating sets in absence
+    of the sheaf we are generating, we also need to define it. And it turns out
+    a set of elements and an appropriate notion of equivalence relation is
+    exactly what we need to recover a whole sheaf.
   }
 \end{handwritten}
 \begin{handwritten}
   % ℒ-sets
+  % TODO: add definition of ‖a‖
+  \note<1|handout:1>{
+    Let \(ℒ\) be the topology on \(X\). Here \(ℒ\) stands for \emph{locale}, but
+    I don't say this in my thesis.
+    So an \(ℒ\)-set is just a set, with a (partial) equivalence relation in the
+    internal language, which we call the \(ℒ\)-equality. But because we don't
+    have an internal language yet, we have to say it's a map from \(A×A\) to
+    \(ℒ\), which satisfies the symmetry-like condition and the transitivity-like
+    condition. We ommit reflexivity in a sense, since our elements are not
+    necessarily total, e.g. \(\frac1x\) is not defined at \(0\). However we will
+    have that reflexivity holds up to where the element is defined, and in fact,
+    we define the extent of definition by the diagonal of the \(ℒ\)-equality.
+    
+    I'm not quite set on the name, alternatively
+    this is called a \quot{Heyting valued set}, but that's somewhat of a
+    mouthful in English and a lot of a mouthful in Slovene, so for now I'm
+    sticking with the short \(ℒ\)-set.
+  }
+  \note<2|handout:2>{
+    The next building block in our story would be morphisms, and we might be
+    tempted to just define them as structure preserving maps, so maps
+    \(f : A → B\) such that \(a = a' ⇒ f(a) = f(a')\) and \(‖f(a)‖ = ‖a‖\).
+    Why exactly these maps? Well, because they will work. But why am I writing
+    this on the whiteboard? Because they don't work yet.
+
+    Consider this example of a map we would be able to define internally.
+  }
+\end{handwritten}
+\begin{handwritten}
+  % Non-example
   \note{
+    Let \(A\) be the \(ℒ\)-set with one global element \(a\) and \(B\) the
+    \(ℒ\)-set with two elements \(b₀\) and \(b₁\), defined at \(0\) and \(1\)
+    respectivelly.
+    Then there should actually be only one map from \(A\) to \(B\). This is
+    because \(b₀\) and \(b₁\) should actually glue to a single element \(b\) at
+    the top, and then both \(A\) and \(B\) are one-element sets, so we only have
+    one map.
+
+    But we can define it sort of internally. At \(0\) the map maps \(a\) to
+    \(b₀\) and at \(1\) it maps \(a\) to \(b₁\). So in essence, we can define a
+    relation between \(A\) and \(B\), with the meaning of \quot{\(a\) is mapped
+      to \(b\) by \(f\)}. And it will satisfy the internal version of functionality.
   }
 \end{handwritten}
 \begin{handwritten}
   % ℒ-morphisms
   \note{
+    So an \(ℒ\)-morphism will be a functional relation in the internal language,
+    and again that means we have a map from \(B×A\) to \(ℒ\) that satisfies the
+    appropriate axioms, so that's \(3\) for single-valuedness and \(4\) for
+    totality. And the other two are just saying that this relation
+    sufficiently agrees with the \(ℒ\)-equality. And in fact, this is exactly
+    what it means for a map like that to be a relation. Those are called
+    strictness and extensionality, and will be essentialy tautologies in the
+    internal language. But lets actually define the internal language first, so
+    I stop gesturing to the air.
   }
 \end{handwritten}
 %%%%%
 \begin{handwritten}
   % Step 3
   \note{
+    And considering I already cheated a bit and gave myself infinitary
+    conjunctions and disjunctions there's not much to add.
+    The basic connectives are the same, and the quantifiers are essentially the
+    same, except we account for the extents of elements.
+    We can also interpret relations and equality as their \(ℒ\)-set
+    counterparts.
   }
 \end{handwritten}
 \begin{handwritten}
   % Slovar
+  % TODO: add relation?
   \note{
+    So what changes is that for universal quantification we add that \(φ(a)\) must
+    at least where \(a\) is defined, and for existential quantification \(a\)
+    exists at most where \(a\) exists.
+
+    We do this because sometimes we don't use all bound variables, e.g. in
+    \(\exist{x : A}{⊤}\), if \(A\) only has one element defined at the open
+    point of the Sierpinski space.
+    Similarly, for universal quantification this allows us to say for example
+    that \(\for{x : A}{x = x}\) holds.
+
+    There is also a term language, but it's not that interesting, elements of
+    \(ℒ\)-sets are interpreted as themselves, and internal operations are just
+    external maps (that are strict and extensional).
+    
+    
+    It's important to note though, that we can't actually form the term \(f(a)\)
+    for an \(ℒ\)-morphism. We need an actual (extensional) mapping for that,
+    though in certain contexts we will be able to use \(f(a)\) as a bona fide
+    element of the codomain.
   }
 \end{handwritten}
 \begin{handwritten}
   % ℒ-set
   \note{
+    So rephrasing the conditions in the definitions in terms of the internal
+    language we get the following, which is saying \emph{exactly} \quot{a set
+      with an internal equivalence relation}.
   }
 \end{handwritten}
 \begin{handwritten}
   % ℒ-morphisms
   \note{
+    And similarly here we get \quot{functional relation} with \(3\) and \(4\),
+    and the first two are essentially tautologies. For the first, to have formed
+    \quot{\(b = f(a)\)} we needed to have \(b\) and \(a\) exist. But then the
+    consequent is just true, so the first condition doesn't say anything. And in
+    the second one, if we have equalities we can substitute with them, so it's a
+    tautology again.
+    % NOTE: Here it's somewhat nuanced whether we can actually substitute. It's
+    % probably a consequence of the definition of relation.
   }
 \end{handwritten}
 \begin{handwritten}
+  % Step 4
+  \note{
+    Now we're ready to explore the landscape of topological models in this
+    context, from the internal view.
+  }
+\end{handwritten}
+\begin{handwritten}[10cm]
   % id, ∘, R(f(a))
   \note{
+    Obviously we need \(ℒ\)-sets to form a category, so we need an identity
+    morphism and composition. But since morphisms are internal relations, we can
+    just take whatever the identity and composition are for relations. In our
+    case, the identity is just the \(ℒ\)-equality, and the composition is just
+    what it is.
+
+    And as promised, we can evaluate formulas at \(f(a)\), since propositionally
+    there exists a \(b\) that is equal to \(f(a)\).
   }
 \end{handwritten}
 \begin{handwritten}
   % Constructions
   \note{
+    I could have also done this earlier, but we can construct the usual
+    suspects.
   }
 \end{handwritten}
 \begin{handwritten}
@@ -291,7 +428,6 @@
 \end{handwritten}
 \begin{handwritten}
   % mono inj
-  % TODO: also recreate external proof
   \note{
   }
 \end{handwritten}
@@ -309,10 +445,10 @@
     &≤ ⋁_{a ∈ A, b' ∈ B}⟦c = g(b')⟧∧⟦b'=f(a)⟧∧⟦b=f(a)⟧\\
     &= ⋁_{a ∈ A}⟦c = g∘f(a)⟧∧⟦b=f(a)⟧\\
     &= ⋁_{a ∈ A}⟦c = h∘f(a)⟧∧⟦b=f(a)⟧\\
-    &≤ ⋁_{a ∈ A, b' ∈ B}⟦c = h(b')⟧∧⟦b'=f(a)⟧∧⟦b=f(a)⟧\\
+    &= ⋁_{a ∈ A, b' ∈ B}⟦c = h(b')⟧∧⟦b'=f(a)⟧∧⟦b=f(a)⟧\\
     &≤ ⋁_{b' ∈ B}⟦c = h(b')⟧∧⟦b'=b⟧\\
-    &= ⟦c = h∘1_B(b')⟧\\
-    &= ⟦c = h(b')⟧
+    &= ⟦c = h∘1_B(b)⟧\\
+    &= ⟦c = h(b)⟧
   \end{align*}
 
 \end{frame}
@@ -328,68 +464,6 @@
   }
 \end{handwritten}
 %%%%%
-
-\begin{frame}
-  \frametitle{Logika odprtih množic}
-
-  \begin{align*}
-    &⊤&&     X\\
-    &⊥&&     ∅\\
-    \uncover<2->{
-    &U ∧ V&& U ∩ V\\
-    &U ∨ V&& U ∪ V\\
-    }
-    \uncover<3->{
-    &¬U&&    \int{\p{Uᶜ}}\\
-    }
-    \uncover<4->{
-    &U ⇒ V&& \int{\p{V ∪ Uᶜ}} = ⋃\set{W ⊆ X}{W ∩ U ⊆ V}\\
-    &U ⇔ V&& \int{\p{\p{V∩U} ∪ \p{V∪U}ᶜ}}
-    }
-  \end{align*}
-  
-  \note{
-    Zdej, prvo vprašanje je, kako zgledajo odprte množice kot resničnostne
-    vrednosti. Očitno če je neki res povsod je res, tako da resnica bo cel
-    prostor. Obratno, neresnica bo prazna množica, torej da nikjer ni res.
-    
-    Naprej, recimo, da imamo dve funkciji, ena je pozitivna na \(U\), druga
-    je pozitivna na \(V\), pol sta obe pozitivni na preseku \(U ∩ V\).
-    Tako da konjunkcija bo presek. Podobno je disjunkcija unija.
-    
-    Negacija je prva neočitna, ker ne mormo vzet samo komplementa, ampak lahko
-    pa vzamemo notranjost komplementa, oziroma zunanjost množice.
-    
-    % TODO: implikacija
-  }
-\end{frame}
-
-\begin{frame}
-  \frametitle{Logika odprtih množic}
-
-  \begin{align*}
-    &⊤&&     X\\
-    &⊥&&     ∅\\
-    &U ∧ V&& U ∩ V\\
-    &U ∨ V&& U ∪ V\\
-    &¬U&&    \int{\p{Uᶜ}}\\
-    &U ⇒ V&& \int{\p{V ∪ Uᶜ}} = ⋃\set{W ⊆ X}{W ∩ U ⊆ V}\\
-    &U ⇔ V&& \int{\p{\p{V∩U} ∪ \p{V∪U}ᶜ}}
-  \end{align*}
-
-  \note{
-    % TODO: tabla, LEM in DeMorgan?
-
-    Izključeno tretjo možnost in DeMorganov zakon se da povedati zgolj z neko
-    formulo o resničnostnih vrednostih, zato smo lahko naredili to
-    karakterizacijo, ampak temu ni nujno vedno res. Obstajajo nekonstruktivni
-    principi, ki govorijo recimo o neskončnih zaporedjih, ali pa realnih
-    številih. Prav tako poznamo topološke lastnosti, ki govorijo o več kot le
-    odprtih množicah, na primer \(T₆\) lastnost, ki pravi, da je vsaka zaprta
-    množica natanko ničelna množica neke realne funkcije, in še druge. 
-  }
-\end{frame}
-
 \begin{frame}
   \frametitle{Objekti}
 
