@@ -19,6 +19,7 @@
 % \setbeamercolor{author}{fg=red!70!black}
 % \setbeamercolor{institute}{fg=green!30!black}
 % \setbeamercolor{date}{fg=blue!50!black}
+\setbeamercolor{background}{white}
 
 % \usepackage[T1]{fontenc}        % kodiranje znakov v .pdf
 % \usepackage[utf8]{inputenc}     % kodiranje znakov v .tex
@@ -198,12 +199,13 @@
     the 70s, Sheaves and Logic, which introduced the concept and the 3rd volume
     of Francis Borceux's Handbook of Categorical Algebra, which has quite a few
     useful lemmas. A big difference to those though is that I develop as much of
-    the theory in the internal language, which I believe works quite well.
+    the theory as possible in the internal language, which I believe works quite
+    well.
 
-    I hope to end up finishing the construction of the equivalence between
-    Heying valued sets and sheaves and the construction of the real numbers
-    object in a topos. % NOTE: will I actually though?
-
+    %I hope to end up finishing the construction of the equivalence between
+    %Heying valued sets and sheaves and the construction of the real numbers
+    %object in a topos. % NOTE: will I actually though?
+    
     But to start small, we wish to construct a topos, whose internal logic has
     as its truth values the open sets of our topological space.
 
@@ -215,19 +217,30 @@
   \note{
     So first we can construct a propositional logic with infinitary conjunctions
     and disjuncitons, and that is basically just the structure of the topology
-    as a complete Heyting algebra. Equivalently a frame, so I will call it that
-    from now. % NOTE: will I?
+    as a complete Heyting algebra.
+    %Equivalently a frame, so I will call it that from now. % NOTE: will I?
   }
 \end{handwritten}
-\begin{handwritten}[7cm,11cm,13cm]
+\begin{handwritten}[11cm,13cm]
   % Slovar
-  \note<1>{
-    So first, we can interpret truth and falsity. Truth should obviously be the
-    whole space.
-    % TODO: the rest of the owl
+  \note{
+    So true and false are the top and bottom elements respectivelly, so the
+    whole space and the empty set, and conjunction and disjunction are
+    intersection and union.
+
+    Implication is more novel, we don't see that in the intro to topology
+    course. The correct definition of \(U ⇒ V\) would be something like
+    \quot{the union of opens \(W\) such that if \(W ⊆ U\) then \(W ⊆ V\)}, but
+    it turns out it has a much nicer characterisation as the interior of
+    \(V∪Uᶜ\). Now that's similar to saying that implication is defined as
+    \(V∨¬U\), but the key difference is when we take that interior.
+
+    Then for the infinitary ones, we just take infinitary intersections and
+    unions, though for the conjunciton we need to take the interior.
+
   }
 \end{handwritten}
-\begin{handwritten}[6cm]
+\begin{handwritten}[5cm]
   % LEM iff discrete
   % NOTE: nekje pred tem rabim povedat, da delamo z okoliši/T₀
   \note{
@@ -258,7 +271,7 @@
 
   }
 \end{handwritten}
-\begin{handwritten}[12cm]
+\begin{handwritten}[6cm,13cm]
   % Generators
   % TODO: change F' to S
   \note<1>{
@@ -319,7 +332,9 @@
     But we can define it sort of internally. At \(0\) the map maps \(a\) to
     \(b₀\) and at \(1\) it maps \(a\) to \(b₁\). So in essence, we can define a
     relation between \(A\) and \(B\), with the meaning of \quot{\(a\) is mapped
-      to \(b\) by \(f\)}. And it will satisfy the internal version of functionality.
+      to \(b\) by \(f\)}. And it will satisfy the internal version of
+    functionality.
+
   }
 \end{handwritten}
 \begin{handwritten}
@@ -348,6 +363,8 @@
     counterparts.
   }
 \end{handwritten}
+\stepcounter{thehandwritten}
+% TODO: remove
 \begin{handwritten}
   % Slovar
   % TODO: add relation?
@@ -383,6 +400,7 @@
 \end{handwritten}
 \begin{handwritten}
   % ℒ-morphisms
+  % TODO: funkcije so morfizmi
   \note{
     And similarly here we get \quot{functional relation} with \(3\) and \(4\),
     and the first two are essentially tautologies. For the first, to have formed
@@ -414,7 +432,7 @@
     there exists a \(b\) that is equal to \(f(a)\).
   }
 \end{handwritten}
-\begin{handwritten}
+\begin{handwritten}[8.75cm]
   % Constructions
   \note{
     I could have also done this earlier, but we can construct the usual
@@ -453,16 +471,88 @@
 
 \end{frame}
 \begin{handwritten}
-  % 
+  % char of subbobjects
   \note{
   }
 \end{handwritten}
-%%%%%
+\begin{handwritten}[12.5cm]
+  % 𝒫A is predicates on A
+  \note{
+    If \(U = f(a)\) then \(f(a)\) is \(U\), so when you compare it with \(⊤\)
+    you should get \(U\) back.
+  }
+\end{handwritten}
+\begin{handwritten}[12cm]
+  % image and preimage
+  \note<1>{
+  }
+  \note<2>{
+    But then the third propery of \(ℒ\)-morphisms says
+    \(y ∈ f(a) ∧ y' ∈ f(a) ⇒ y = y'\).
+  }
+\end{handwritten}
+\begin{handwritten}[14.5cm]
+  % singletons
+  \note{
+  }
+\end{handwritten}
+\begin{handwritten}
+  % example
+  \note{
+  }
+\end{handwritten}
+\begin{handwritten}[5.5cm,12.5cm]
+  % σ(A) and complete ℒ-sets
+  \note{
+  }
+\end{handwritten}
+\begin{handwritten}[3cm]
+  % restrictions
+  \note{
+  }
+\end{handwritten}
+\begin{handwritten}[4cm]
+  % gluing
+  \note{
+  }
+\end{handwritten}
+\begin{handwritten}
+  % B complete: A ↬ B = A → B
+  \note{
+  }
+\end{handwritten}
+\begin{handwritten}
+  % constructions bis
+  \note{
+  }
+\end{handwritten}
+\begin{handwritten}
+  % σ(A) is complete
+  \note{
+  }
+\end{handwritten}
+\begin{handwritten}
+  % A ≅ σ(A)
+  \note{
+  }
+\end{handwritten}
+\begin{handwritten}
+  % Natural numbers
+  \note{
+  }
+\end{handwritten}
+\stepcounter{thehandwritten}
 \begin{handwritten}
   % 
   \note{
   }
 \end{handwritten}
+%%%%%
+% \begin{handwritten}
+%   % 
+%   \note{
+%   }
+% \end{handwritten}
 %%%%%
 \begin{frame}
   \frametitle{Objekti}
@@ -518,97 +608,6 @@
     Za splošne množice pa vzamemo kar isto stvar. Ampak zdaj je vprašanje,
     kakšne funkcije vzamemo. Izkaže se da kar zvezne, kjer \(A\) opremimo z
     diskretno topologijo.
-  }
-\end{frame}
-
-\begin{frame}
-  \frametitle{Kvantifikatorji}
-
-  \begin{align*}
-    \uncover<2->{U ≤ }\for{y : Y}{P(y)} &≔
-    \uncover<2->{U ≤ }⋀_{y ∈ Y} P(y)\\
-    \uncover<2->{&⇔ \for{y ∈ Y}{\dom{y} ≤ U ⇒ \dom{y} ≤ P(y)}}\\
-    % TODO: add pause
-    \uncover<2->{U ≤ }\exist{y : Y}{P(y)} &≔
-    \uncover<2->{U ≤ }⋁_{y ∈ Y} P(y)\\
-    \uncover<2->{&⇔ \eventually{V ≤ U}{\exist{y ∈ Y}{\dom{y} = V ∧ \dom{y} ≤ P(y)}}}
-  \end{align*}
-
-  \note{
-
-  }
-\end{frame}
-
-\begin{frame}
-  \frametitle{Realna števila}
-
-  \begin{trditev}
-    Nad \(X\) drži \(\alpo*\) natanko tedaj, ko so ničelne množice funkcij
-    \(U → ℝ\) odprte.
-  \end{trditev}
-
-  \pause
-  
-  \begin{trditev}
-    Če je \(X\) (lokalno) \(T₆\), nad njem drži \(\aks*\).
-  \end{trditev}
-
-  \pause
-
-  \begin{trditev}
-    Če je prostor lokalno povezan in nad njem velja \(\Rd = \Rc\), velja tudi \(\alpo*\).
-  \end{trditev}
-
-  \note{
-    \begin{align*}
-      \alpo* &≔ \for{x : ℝ}{x > 0 ∨ x ≤ 0} = \for{x : ℝ}{x > 0 ∨ x = 0 ∨ x < 0}\\
-      \aks*  &≔ \for{U : 𝒪(X)}{\exist{x : ℝ}{U ⇔ x > 0}}
-    \end{align*}
-  }
-\end{frame}
-
-\begin{frame}
-  \frametitle{Ne}
-
-  Verjetno \(\{0\}∪\set{2⁻ⁿ}{n ∈ ℕ}\) dela.
-
-  \note{
-    Tam sem se prepričala, a ne dokazala, da \(\alpo*\) in \(\CCv\) ne držita, pa
-    vseeno \(\Rd = \Rc\).
-  }
-\end{frame}
-
-\begin{frame}
-  \frametitle{Izbira?}
-
-  \begin{izrek}
-    Nad \(T₁\) prostori velja števna izbira natanko tedaj, ko je topologija zaprta
-    za števne preseke.
-  \end{izrek}
-
-  \pause
-  
-  \begin{izrek}
-    Nad \(T₁\) prostori velja števna izbira natanko tedaj, ko velja \(\AC{\p{ℕ, 2}}\).
-  \end{izrek}
-
-  \pause
-
-  \begin{trditev}[Hendtlass, Lubarsky 2016]
-    Če je prostor ultraparakompakten, nad njem velja odvisna izbira.
-  \end{trditev}
-
-  \note{
-    Tu števnost ni važna.
-  }
-\end{frame}
-
-\begin{frame}
-  \frametitle{}
-
-  Vprašanja?
-
-  \note{
   }
 \end{frame}
 
