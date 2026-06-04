@@ -30,6 +30,7 @@
 \usepackage{enumerate}
 
 \usepackage{graphicx}
+\usepackage{tabulary}
 
 
 \setmainfont{Latin Modern Roman}
@@ -68,11 +69,23 @@
 
 % \beamertemplatetransparentcovereddynamic
 
+\makeatletter
+\let\authorfield\author
+\let\institutefield\institute
+\renewcommand{\author}[1]{\def\@author{#1}}
+\renewcommand{\institute}[1]{\def\@institute{#1}}
+\newcommand{\location}[1]{\def\@location{#1}}
 \title{Topological Properties are Logical Principles in Topological Models}
-\author{Luna Strah\\ {\scriptsize University of Ljubljana, Faculty of mathematics and physics}}
+% \author{Luna Strah\\ {\scriptsize University of Ljubljana, Faculty of mathematics and physics}}
+\author{Luna Strah}
+\institute{University of Ljubljana, Faculty of mathematics and physics}
+\location{Syntax and Semantics of Type Theory 2026}
 % \institute{University of Ljubljana, Faculty of mathematics and physics}
-\institute{Syntax and Semantics of Type Theory 2026}
+%\institute{Syntax and Semantics of Type Theory 2026}
 \date{4.~6.~2026, Ljubljana}
+\authorfield{\@author\\ {\scriptsize \@institute}}
+\institutefield{\@location}
+\makeatother
 
 \newcommand{\eps}{\varepsilon}
 \renewcommand{\hat}{\widehat}
@@ -84,7 +97,6 @@
 \def\bR{\mb{R}}
 \def\subq{\subseteq}
 \def\phi{\varphi}
-
 
 \DeclarePairedDelimiterX{\parens}[1]{(}{)}{#1}
 \DeclarePairedDelimiterX{\absolute}[1]{\lvert}{\rvert}{#1}
@@ -117,17 +129,22 @@
 \DeclareMathOperator{\ext}{ext}
 \DeclareMathOperator{\dom}{dom}
 \DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\el}{el}
 \DeclareMathOperator{\dm}{DM}
 %\DeclareMathOperator{\cov}{Cov}
 \AtBeginDocument{
   %\def\c#1{\left( {#1} \right)^c}
   %\def\c#1{{#1}^c}
   \def\c{\uline}
+  \def\h{ℋ}
+  \def\hvsets{\cat{HVSets}}
   \newcommand{\g}[1]{\left\langle {#1} \right\rangle}
   \renewcommand{\b}[1]{\left\{ {#1} \right\}}
   \renewcommand{\i}[1]{\left⟦ {#1} \right⟧}
-  %\newcommand{\e}[1]{\left‖ {#1} \right‖}
+  % \newcommand{\e}[1]{\left‖ {#1} \right‖}
+  \newcommand{\eq}[3][]{{#2} \sim_{#1} {#3}}
   \DeclareMathOperator{\e}{E}
+  \newcommand{\carr}[1]{\left\vert {#1} \right\vert}
   \newcommand{\s}[1]{\left\{ {#1} \right\}}
   \renewcommand{\O}[1]{\mathcal{O}{#1}}
   \renewcommand{\int}{\textrm{int}}
@@ -146,7 +163,8 @@
 \defquantifier{exact}{ι}
 \defquantifier{eventually}{\nabla}
 \AtBeginDocument{
-\defquantifier{sigma}{\Sigma}
+\renewcommand{\sigma}[2]{(#1)×#2}
+%\defquantifier{sigma}{\Sigma}
 \defquantifier{pi}{\Pi}
 }
 \renewcommand{\check}{ \(\checkmark\)}
@@ -180,8 +198,9 @@
 \defprinciple{ks}
 \defprinciple{alpo}
 \defprinciple{awlpo}
-%\defprinciple{allpo}
+\defprinciple{allpo}
 \defprinciple{amp}
+\defprinciple{awmp}
 \defprinciple{aks}
 \newcommand{\AC}{\principle{AC}}
 \newcommand{\IAC}{\principle{IAC}}
@@ -224,17 +243,17 @@
 }
 \frame{
   Formulas can be assigned open sets, thus logical principles (that therefore
-  talk about open sets) can be interpreted as topological principles.
+  talk about open sets) can be interpreted as topological properties.
 
   \note{
   }
 }
-\begin{frame}
-  \frametitle{Blackboard content}
-  \begin{figure}
-    \includegraphics[width=0.9\textwidth]{board-1.jpg}
-  \end{figure}
-\end{frame}
+% \begin{frame}
+%   \frametitle{Blackboard content}
+%   \begin{figure}
+%     \includegraphics[width=0.9\textwidth]{board-1.jpg}
+%   \end{figure}
+% \end{frame}
 
 %%%%%
 % TODO: Slides about synteticness and what we are doing
@@ -285,9 +304,22 @@
   \begin{trditev}
     A space is discrete iff it satisfies \(\lem*\).
 
-    A space is extremally disconnected iff it satisfies \(\wlem*\)
-    (\(\for{p:Ω}{¬p ∨ ¬¬p}\)).
+    A space is extremally disconnected iff it satisfies \(\wlem*\) (\(\for{p:Ω}{¬p ∨ ¬¬p}\)).
   \end{trditev}
+\end{frame}
+
+\begin{frame}
+  \frametitle{What about theorems?}
+
+  An extension to the observation then, is that theorems in constructive logic become theorems of topological properties.
+
+  \begin{trditev}
+    \(\lem* ⇒ \wlem*\)
+  \end{trditev}
+
+  \begin{corollary}
+    Every discrete space is extremally disconnected.
+  \end{corollary}
 \end{frame}
 
 \begin{frame}
@@ -299,6 +331,23 @@
   \begin{trditev}
     \[ \wlem* ⇔  \Rd ≡ \Rm\]
   \end{trditev}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Principles}
+
+  \begin{align*}
+    &\lpo* ≔ \for{α : 2^ℕ}{α = 0 ∨ α \apart 0}\\
+    &\wlpo* ≔ \for{α : 2^ℕ}{α = 0 ∨ α ≠ 0}\\
+    &\mp* ≔ \for{α : 2^ℕ}{α ≠ 0 ⇒ α \apart 0}\\
+    &\alpo* ≔ \for{x : \Rd}{x = 0 ∨ x \apart 0}\\
+    &\awlpo* ≔ \for{x : \Rd}{x = 0 ∨ x ≠ 0}\\
+    % \pause
+    &\amp* ≔ \for{x : \Rd}{x ≠ 0 ⇒ x \apart 0}
+    % &\ks* ≔ \for{p : Ω}{\exist{α : 2^ℕ}{p ⇔ α \apart 0}}\\
+    % &\aks*_ℛ ≔ \for{p : Ω}{\exist{x : ℛ}{p ⇔ x \apart 0}}
+  \end{align*}
+
 \end{frame}
 
 % \begin{frame}
@@ -462,49 +511,34 @@
 
 % \end{frame}
 
-\begin{frame}
-  \frametitle{Principles}
+% \begin{frame}
+%   \frametitle{Reals}
 
-  \begin{align*}
-    &\lpo* ≔ \for{α : 2^ℕ}{α = 0 ∨ α \apart 0}\\
-    &\wlpo* ≔ \for{α : 2^ℕ}{α = 0 ∨ α ≠ 0}\\
-    &\alpo*_ℛ ≔ \for{x : ℛ}{x = 0 ∨ x \apart 0}\\
-    &\awlpo*_ℛ ≔ \for{x : ℛ}{x = 0 ∨ x ≠ 0}\\
-    % \pause
-    &\mp* ≔ \for{α : 2^ℕ}{α ≠ 0 ⇒ α \apart 0}\\
-    &\amp*_ℛ ≔ \for{x : ℛ}{x ≠ 0 ⇒ x \apart 0}
-    % &\ks* ≔ \for{p : Ω}{\exist{α : 2^ℕ}{p ⇔ α \apart 0}}\\
-    % &\aks*_ℛ ≔ \for{p : Ω}{\exist{x : ℛ}{p ⇔ x \apart 0}}
-  \end{align*}
+%   For \(ℛ = \c ℝ\) the analytic principles are true.
 
-\end{frame}
+%   For \(ℛ = \Rc\) the analytic and ``semi-decidable'' principles coincide.
 
-\begin{frame}
-  \frametitle{Reals}
+%   \pause
 
-  For \(ℛ = \c ℝ\) the analytic principles are true.
+%   For \(ℛ = \Rm\) the analytic principles correspond to full principles, so
+%   \(\alpo*_{\Rm} = \amp*_{\Rm} = \lem*\) and \(\awlpo*_{\Rm} = \wlem*\).
 
-  For \(ℛ = \Rc\) the analytic and ``semi-decidable'' principles coincide.
+%   Fix \(ℛ ≔ \Rd\).
 
-  \pause
-
-  For \(ℛ = \Rm\) the analytic principles correspond to full principles, so
-  \(\alpo*_{\Rm} = \amp*_{\Rm} = \lem*\) and \(\awlpo*_{\Rm} = \wlem*\).
-
-  Fix \(ℛ ≔ \Rd\).
-
-\end{frame}
+% \end{frame}
 
 \begin{frame}
   \frametitle{Reals}
 
+  \begin{definicija}
+    A space is a \emph{P-space} when zero sets of real-valued continuous functions \(U → ℝ\) are open.
+  \end{definicija}
   \begin{trditev}
-    A space satisfies \(\alpo*\) iff zero-sets of real continuous functions
-    \(U → ℝ\) are open.
+    A space satisfies \(\alpo*\) iff it is a P-space.
   \end{trditev}
-  \begin{trditev}
-    Over completely regular spaces we have \(\alpo*\) iff they are a P-space.
-  \end{trditev}
+  % \begin{trditev}
+  %   A completely regular space satisfies \(\alpo*\) iff it is a P-space.
+  % \end{trditev}
 
   \note{
     But remember P-space gives \(\CC\).
@@ -515,8 +549,7 @@
   \frametitle{Reals}
 
   \begin{definicija}
-    A space is \emph{basically disconnected} when the closure of every cozero
-    set is open.
+    A space is \emph{basically disconnected} when the closure of every cozero set is open.
   \end{definicija}
   \begin{trditev}
     A space satisfies \(\awlpo*\) iff every open subspace is basically
@@ -545,8 +578,7 @@
   \end{izrek}
 
   \begin{izrek}
-    Zero sets of real-valued functions are open iff the space is a basically
-    disconnected almost P-space.
+    A space is a P-space iff it is a basically disconnected almost P-space.
   \end{izrek}
 
   \note{
@@ -607,26 +639,26 @@
 \begin{frame}
   \frametitle{\(\wlem*\)}
 
-  \begin{trditev}
-    A space \(X\) is extremally disconnected iff the algebra of real-valued continuous functions on \(X\) \(𝒞(X)\) is Dedekind complete.
-  \end{trditev}
+  \begin{corollary}
+    A space \(X\) is extremally disconnected iff the algebra of real-valued continuous functions on \(X\) is Dedekind complete.
+  \end{corollary}
 
 \end{frame}
 
 \begin{frame}
   \frametitle{Heyting-valued sets}
 
-  Fix \(\h\).
-
   \begin{definition}
-    A \emph{Heyting-valued set} \(A\) is a pair of a set \(\carr A\) and ``Heyting-valued relation'' \(\eq[A] : \carr A → \carr A → \h\) that is symmetric and transitive, i.~e.
+    A \emph{Heyting-valued set} \(A\) is a pair of a set \(\carr A\) and ``Heyting-valued equality relation'' \(\eq[A]{}{} : \carr A → \carr A → \h\) that is symmetric and transitive, i.~e.
     \begin{itemize}
     \item \(\eq[A] x y ≤ \eq[A] y x\)
     \item \(\eq[A] x y ∧ \eq[A] y z ≤ \eq[A] x z\)
     \end{itemize}
     Define \(\e x\) to be \(\eq x x\).
   \end{definition}
+
 \end{frame}
+
 \begin{frame}
   \frametitle{Morphisms}
 
@@ -652,23 +684,31 @@
     \begin{itemize}
     \item \(1 = \p{\{\ast\}, \e \ast ⇔ ⊤}\)
     \item \(ℕ = \p{ℕ, \p{m , n} ↦ ⋁\set{⊤}{m=n}}\)
-    \item \(\Rd = \p{⋃_{p∈\h}𝒞(p, ℝ) , \p{f, g} ↦ ⋁\set{p≤\e f ∧ \e g}{f\res p = g\res p}}\)
+      \pause
+    \item \(A+B = \p{\carr A + \carr B, ...}\)
+      \pause
+    %\item \(\Rd = \p{⋃_{p∈\h}𝒞(p, ℝ) , \p{f, g} ↦ ⋁\set{p≤\e f ∧ \e g}{f\res p = g\res p}}\)
+    \item \(\Rd = \p{⋃_{U∈𝒪X}𝒞(U, ℝ) , \p{f, g} ↦ \int\set{x ∈ X}{f(x) = g(x)}}\)
+      \pause
+    \item \(Ω = \p{\h, ⇔}\)
     \end{itemize}
   \end{example}
 
 \end{frame}
-
 
 \begin{frame}
   \frametitle{Questions}
 
   \begin{itemize}
   \item Obviously, try to characterise \(\Rc\) and \(\Rc ≅ \Rd\) in particular.
-  \item Develop techniques to internalise usual topological principles.
+  \item Similarly, consider \(ℝ_E\).
+  \item Develop techniques to synthesise topological principles.
+  \item Points.
+    \pause
+  \item Locales.
+    \pause
   \item Consider instead of sheaves on \(X\) another space \(\tilde X\).
   \item Try a different (non-local) logic.
-  \item Locales.
-  \item Points.
   \item What about classical taboos?
   \item SAG style gros topos.
   \end{itemize}
@@ -677,5 +717,81 @@
   }
 \end{frame}
 
+\begin{frame}
+  \frametitle{Universe}
+
+  Heyting-valued sets have a nice universe; fix a universe \(V\) of sets.
+  \begin{itemize}
+  \item
+    \(\begin{aligned}[t]
+      &\carr U ≔ \hvsets_V\\
+      &\eq[U] X Y ≔ ⋁\set{p ∈ \h}{X\res p = Y \res p}\end{aligned}\)
+  %\item \(X ∩ Y ≔ X\res{\eq[U] X Y}\quad (= Y\res{\eq[U] X Y})\)
+  \item
+    \(\begin{aligned}[t]
+      &\carr E ≔ \sigma{X ∈ \hvsets_V}{\carr X}\\
+      &\eq[E] {(X,x)} {(Y,y)} ≔ ...\end{aligned}\)%x, y ∈ X∩Y ; \eq[U] X Y ∧ \eq[X∩Y] x y\end{aligned}\)
+  \item
+    \(\begin{aligned}[t]
+      &\el \mkern1.5mu : \mkern1.5mu E → U\\
+      &\p{X, x} ↦ X
+    \end{aligned}\)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Current and future work}
+
+  \begin{itemize}
+  \item Provide a nicer categorical picture as a Kleisli category.
+  \item Provide a dependent type theory (with features corresponding to the fact we are working in topological models).
+  \item Expand on the universe construction and make it behave nicer. Also produce some examples to show why this is ``better'' than the usual constructions.
+    \pause
+  \item Extend to triposes (probably using evidenced frames/arrow algebras/implicative algebras).
+  \item (Future future work) Extend the approach in some sense to the \(∞\)-categorical/HoTT case.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \begin{table}[h]
+    \resizebox{\columnwidth}{!}{%
+    \begin{tabulary}{}{c|l}
+      Discrete                & \(\lem*\) (and \(\AC\))\\
+      \hline
+      Extremally disconnected & DeMorgan\\
+                              & \(≡\)ly \(𝒞(U, ℝ)\) is Dedekind complete\\
+                              & \(≡\)ly \(\Rm = \Rd\)\\
+      \hline
+      P-space                 & \(\alpo*\)\\
+      \hline
+      Basically disconnected  & \(\awlpo*\)\\
+                              & \(≡\)ly \(𝒞(U, ℝ)\) is Dedekind \(σ\)-complete\\
+      \hline
+      F-space                 & \(\allpo*\)\\
+      \hline
+      Almost P-space          & \(\amp*\)\\
+      \hline
+      Grothendieck topology is \(σ\)-complete
+                              & \(\AC(\c A)\) in \(\for{B}{\c A ↬ B ≅ \c{A ↝ B}}\)\\
+      \hline
+      Locally \(T₆\)          & Skolemization of the analytic Kripke schema\\
+                              & Implies \(\alpo*\) is idempotent as an instance degree\\
+      \hline
+      Stone                   & Implies \(\lpo*\) is idempotent as an instance degree\\
+      \hline
+      Locally connected       & Implies \(\lpo*\), \(⇐\) for second-countable spaces\\
+                              & Implies \(\Rc = \c ℝ\), \(⇐\) for second-countable spaces\\
+      \hline
+      \(σ\)-complete          & Implies \(\CC\) and \(\alpo*\)\\
+      \hline
+      Alexandrov              & Implies \(\AC(\c A)\) for all sets \(A\)\\
+      \hline
+      Ultraparacompact        & Implies \(\DC\)
+      %First-countable completely regular & Implies \(\awmp*\)\\
+    \end{tabulary}%
+    }
+  \end{table}
+\end{frame}
 
 \end{document}
